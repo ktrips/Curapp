@@ -41,6 +41,13 @@
                                 <p>16の質問でMBTIタイプを診断</p>
                             </div>
                         </button>
+                        <button id="saved-books-btn" class="menu-btn">
+                            <div class="menu-icon">📚</div>
+                            <div class="menu-content">
+                                <h3>4. 保存した本のリスト</h3>
+                                <p>保存した本の評価と書評を管理</p>
+                            </div>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -139,6 +146,51 @@
                     <div class="button-group">
                         <button id="restart-btn" class="btn btn-secondary">もう一度診断する</button>
                         <button id="home-btn" class="btn btn-secondary">ホームに戻る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 保存した本のリスト画面 -->
+            <div id="saved-books-screen" class="screen">
+                <div class="saved-books-container">
+                    <h2>📚 保存した本のリスト</h2>
+                    <div id="saved-books-list" class="saved-books-list"></div>
+                    <div class="button-group">
+                        <button id="saved-books-back-btn" class="btn btn-secondary">ホームに戻る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 本の詳細・編集画面 -->
+            <div id="book-detail-screen" class="screen">
+                <div class="book-detail-container">
+                    <h2 id="detail-book-title"></h2>
+                    <div class="book-detail-info">
+                        <p id="detail-book-author"></p>
+                        <p id="detail-book-description"></p>
+                    </div>
+                    
+                    <div class="rating-section">
+                        <h3>星評価</h3>
+                        <div class="star-rating" id="star-rating">
+                            <span class="star" data-rating="1">⭐</span>
+                            <span class="star" data-rating="2">⭐</span>
+                            <span class="star" data-rating="3">⭐</span>
+                            <span class="star" data-rating="4">⭐</span>
+                            <span class="star" data-rating="5">⭐</span>
+                        </div>
+                        <p id="rating-text" class="rating-text">評価を選択してください</p>
+                    </div>
+
+                    <div class="review-section">
+                        <h3>書評</h3>
+                        <textarea id="book-review" class="review-textarea" placeholder="この本についての感想や書評を入力してください..."></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="save-review-btn" class="btn btn-primary">保存</button>
+                        <button id="delete-book-btn" class="btn btn-danger">削除</button>
+                        <button id="detail-back-btn" class="btn btn-secondary">戻る</button>
                     </div>
                 </div>
             </div>

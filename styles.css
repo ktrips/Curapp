@@ -439,3 +439,216 @@ header p {
         width: 100%;
     }
 }
+
+/* 保存した本のリスト画面 */
+.saved-books-container {
+    padding: 20px;
+}
+
+.saved-books-container h2 {
+    color: #667eea;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.saved-books-list {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.saved-book-item {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    background: white;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.saved-book-item:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+}
+
+.saved-book-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.saved-book-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.saved-book-author {
+    color: #666;
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.saved-book-rating {
+    font-size: 1.5em;
+    white-space: nowrap;
+}
+
+.saved-book-review-preview {
+    color: #555;
+    line-height: 1.6;
+    margin-top: 10px;
+    max-height: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.saved-book-review-preview:empty::before {
+    content: "書評はまだありません";
+    color: #999;
+    font-style: italic;
+}
+
+.empty-saved-books {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-saved-books-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+/* 本の詳細画面 */
+.book-detail-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.book-detail-container h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.book-detail-info {
+    margin-bottom: 30px;
+}
+
+.book-detail-info p {
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.rating-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+
+.rating-section h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.star-rating {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.star {
+    font-size: 2em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    filter: grayscale(100%);
+    opacity: 0.3;
+}
+
+.star:hover {
+    transform: scale(1.2);
+}
+
+.star.active {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.rating-text {
+    color: #666;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.review-section {
+    margin-bottom: 30px;
+}
+
+.review-section h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.review-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1em;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+.review-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.btn-danger {
+    background: #ff4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #cc0000;
+}
+
+.save-book-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+}
+
+.save-book-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.save-book-btn.saved {
+    background: #6c757d;
+    cursor: default;
+}
+
+.save-book-btn.saved:hover {
+    background: #6c757d;
+    transform: none;
+}
