@@ -1,0 +1,441 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+header p {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+#app {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.screen {
+    display: none;
+    padding: 40px;
+}
+
+.screen.active {
+    display: block;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.intro h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.intro p {
+    margin-bottom: 15px;
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.question-container {
+    margin-bottom: 30px;
+}
+
+#question-text {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.option-btn {
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.option-btn:hover {
+    border-color: #667eea;
+    background: #f5f5ff;
+    transform: translateX(5px);
+}
+
+.option-btn.selected {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+.result-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.mbti-badge {
+    font-size: 3em;
+    font-weight: bold;
+    color: #667eea;
+    margin: 20px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f5f5ff 0%, #e8e8ff 100%);
+    border-radius: 15px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.type-description {
+    font-size: 1.2em;
+    color: #666;
+    margin: 20px 0 40px;
+    line-height: 1.8;
+    padding: 0 20px;
+}
+
+.recommended-books {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.recommended-books h3 {
+    color: #667eea;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.books-list {
+    display: grid;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.book-card {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.book-card:hover {
+    border-color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    transform: translateY(-2px);
+}
+
+.book-title {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.book-author {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 1em;
+}
+
+.book-description {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.amazon-link {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #ff9900;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.amazon-link:hover {
+    background: #ff8800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 153, 0, 0.4);
+}
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    padding: 25px;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.menu-btn:hover {
+    border-color: #667eea;
+    background: linear-gradient(135deg, #f5f5ff 0%, #e8e8ff 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
+}
+
+.menu-icon {
+    font-size: 3em;
+    margin-right: 20px;
+    min-width: 60px;
+    text-align: center;
+}
+
+.menu-content h3 {
+    color: #667eea;
+    margin-bottom: 8px;
+    font-size: 1.3em;
+}
+
+.menu-content p {
+    color: #666;
+    font-size: 1em;
+    margin: 0;
+}
+
+.input-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.input-container h2 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 2em;
+}
+
+.input-container > p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+}
+
+.mbti-selector {
+    margin: 30px 0;
+}
+
+.mbti-selector select {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1.1em;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.mbti-selector select:hover {
+    border-color: #667eea;
+}
+
+.mbti-selector select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.strength-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.strength-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.strength-input-group label {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.strength-input-group input {
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+.strength-input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.button-group .btn {
+    margin-top: 0;
+}
+
+.back-btn {
+    margin-top: 30px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .screen {
+        padding: 20px;
+    }
+    
+    #question-text {
+        font-size: 1.2em;
+    }
+    
+    .mbti-badge {
+        font-size: 2em;
+    }
+    
+    .menu-btn {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .menu-icon {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .button-group .btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI性格診断 - 本の推薦アプリ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 MBTI性格診断 × 本の推薦</h1>
+            <p>あなたの性格タイプを診断して、ぴったりの本を見つけましょう</p>
+        </header>
+
+        <div id="app">
+            <!-- ホーム画面 -->
+            <div id="home-screen" class="screen active">
+                <div class="intro">
+                    <h2>📚 本の推薦アプリへようこそ</h2>
+                    <p>あなたの性格タイプに基づいて、ぴったりの本を推薦します。</p>
+                    <div class="menu-options">
+                        <button id="mbti-input-btn" class="menu-btn">
+                            <div class="menu-icon">🔤</div>
+                            <div class="menu-content">
+                                <h3>1. 自分のMBTIを入れる</h3>
+                                <p>既に知っているMBTIタイプを入力</p>
+                            </div>
+                        </button>
+                        <button id="strength-input-btn" class="menu-btn">
+                            <div class="menu-icon">💪</div>
+                            <div class="menu-content">
+                                <h3>2. Strength Finderの結果を入れる</h3>
+                                <p>Strength Finderの結果を入力</p>
+                            </div>
+                        </button>
+                        <button id="diagnosis-btn" class="menu-btn">
+                            <div class="menu-icon">🔍</div>
+                            <div class="menu-content">
+                                <h3>3. 性格診断をする</h3>
+                                <p>16の質問でMBTIタイプを診断</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MBTI入力画面 -->
+            <div id="mbti-input-screen" class="screen">
+                <div class="input-container">
+                    <h2>MBTIタイプを入力</h2>
+                    <p>あなたのMBTIタイプを選択してください</p>
+                    <div class="mbti-selector">
+                        <select id="mbti-select">
+                            <option value="">選択してください</option>
+                            <option value="INTJ">INTJ - 建築家</option>
+                            <option value="INTP">INTP - 論理学者</option>
+                            <option value="ENTJ">ENTJ - 指揮官</option>
+                            <option value="ENTP">ENTP - 討論者</option>
+                            <option value="INFJ">INFJ - 提唱者</option>
+                            <option value="INFP">INFP - 仲介者</option>
+                            <option value="ENFJ">ENFJ - 主人公</option>
+                            <option value="ENFP">ENFP - 運動家</option>
+                            <option value="ISTJ">ISTJ - 管理者</option>
+                            <option value="ISFJ">ISFJ - 擁護者</option>
+                            <option value="ESTJ">ESTJ - 幹部</option>
+                            <option value="ESFJ">ESFJ - 領事官</option>
+                            <option value="ISTP">ISTP - 巨匠</option>
+                            <option value="ISFP">ISFP - 冒険家</option>
+                            <option value="ESTP">ESTP - 起業家</option>
+                            <option value="ESFP">ESFP - エンターテイナー</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button id="mbti-submit-btn" class="btn btn-primary">本を推薦する</button>
+                        <button id="mbti-back-btn" class="btn btn-secondary">ホームに戻る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strength Finder入力画面 -->
+            <div id="strength-input-screen" class="screen">
+                <div class="input-container">
+                    <h2>Strength Finderの結果を入力</h2>
+                    <p>あなたの上位5つの強みを入力してください</p>
+                    <div class="strength-inputs">
+                        <div class="strength-input-group">
+                            <label>1位の強み</label>
+                            <input type="text" id="strength-1" placeholder="例: 学習欲" />
+                        </div>
+                        <div class="strength-input-group">
+                            <label>2位の強み</label>
+                            <input type="text" id="strength-2" placeholder="例: 戦略性" />
+                        </div>
+                        <div class="strength-input-group">
+                            <label>3位の強み</label>
+                            <input type="text" id="strength-3" placeholder="例: 達成欲" />
+                        </div>
+                        <div class="strength-input-group">
+                            <label>4位の強み</label>
+                            <input type="text" id="strength-4" placeholder="例: 分析思考" />
+                        </div>
+                        <div class="strength-input-group">
+                            <label>5位の強み</label>
+                            <input type="text" id="strength-5" placeholder="例: 未来志向" />
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        <button id="strength-submit-btn" class="btn btn-primary">本を推薦する</button>
+                        <button id="strength-back-btn" class="btn btn-secondary">ホームに戻る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 質問画面 -->
+            <div id="question-screen" class="screen">
+                <div class="progress-bar">
+                    <div id="progress" class="progress-fill"></div>
+                </div>
+                <div class="question-container">
+                    <h2 id="question-text"></h2>
+                    <div id="options" class="options"></div>
+                </div>
+                <button id="question-back-btn" class="btn btn-secondary back-btn">ホームに戻る</button>
+            </div>
+
+            <!-- 結果画面 -->
+            <div id="result-screen" class="screen">
+                <div class="result-container">
+                    <h2>あなたのMBTIタイプは</h2>
+                    <div id="mbti-type" class="mbti-badge"></div>
+                    <p id="type-description" class="type-description"></p>
+                    
+                    <div class="recommended-books">
+                        <h3>📖 あなたにおすすめの本</h3>
+                        <div id="books-list" class="books-list"></div>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="restart-btn" class="btn btn-secondary">もう一度診断する</button>
+                        <button id="home-btn" class="btn btn-secondary">ホームに戻る</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="mbti-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
