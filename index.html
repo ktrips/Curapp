@@ -9,8 +9,22 @@
 <body>
     <div class="container">
         <header>
-            <h1>📚 MBTI性格診断 × 本の推薦</h1>
-            <p>あなたの性格タイプを診断して、ぴったりの本を見つけましょう</p>
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>📚 MBTI性格診断 × 本の推薦</h1>
+                    <p>あなたの性格タイプを診断して、ぴったりの本を見つけましょう</p>
+                </div>
+                <div class="header-actions">
+                    <button id="header-my-books-btn" class="header-btn">
+                        <span class="header-btn-icon">📚</span>
+                        <span class="header-btn-text">My Books</span>
+                    </button>
+                    <button id="header-settings-btn" class="header-btn">
+                        <span class="header-btn-icon">⚙️</span>
+                        <span class="header-btn-text">設定</span>
+                    </button>
+                </div>
+            </div>
         </header>
 
         <div id="app">
@@ -153,10 +167,47 @@
             <!-- 保存した本のリスト画面 -->
             <div id="saved-books-screen" class="screen">
                 <div class="saved-books-container">
-                    <h2>📚 保存した本のリスト</h2>
+                    <h2>📚 My Books</h2>
+                    <div class="book-stats">
+                        <div class="stat-item">
+                            <span class="stat-icon">📖</span>
+                            <span class="stat-label">読みたい</span>
+                            <span class="stat-count" id="stat-want-to-read">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-icon">📚</span>
+                            <span class="stat-label">読んでる</span>
+                            <span class="stat-count" id="stat-reading">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-icon">✅</span>
+                            <span class="stat-label">読んだ！</span>
+                            <span class="stat-count" id="stat-read">0</span>
+                        </div>
+                    </div>
                     <div id="saved-books-list" class="saved-books-list"></div>
                     <div class="button-group">
                         <button id="saved-books-back-btn" class="btn btn-secondary">ホームに戻る</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 設定画面 -->
+            <div id="settings-screen" class="screen">
+                <div class="settings-container">
+                    <h2>⚙️ 設定</h2>
+                    <div class="settings-section">
+                        <h3>Amazonアフィリエイト設定</h3>
+                        <p class="settings-description">Amazonアフィリエイトタグを設定すると、本のリンクに自動的にタグが追加されます。</p>
+                        <div class="settings-input-group">
+                            <label for="affiliate-tag">アフィリエイトタグ</label>
+                            <input type="text" id="affiliate-tag" placeholder="例: yourtag-22" />
+                            <small>アフィリエイトタグを入力してください（例: yourtag-22）</small>
+                        </div>
+                        <div class="button-group">
+                            <button id="save-settings-btn" class="btn btn-primary">保存</button>
+                            <button id="settings-back-btn" class="btn btn-secondary">戻る</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -170,7 +221,25 @@
                         <p id="detail-book-description"></p>
                     </div>
                     
-                    <div class="rating-section">
+                    <div class="status-section">
+                        <h3>読書ステータス</h3>
+                        <div class="status-buttons">
+                            <button class="status-btn" data-status="want-to-read">
+                                <span class="status-icon">📖</span>
+                                <span class="status-label">読みたい</span>
+                            </button>
+                            <button class="status-btn" data-status="reading">
+                                <span class="status-icon">📚</span>
+                                <span class="status-label">読んでる</span>
+                            </button>
+                            <button class="status-btn" data-status="read">
+                                <span class="status-icon">✅</span>
+                                <span class="status-label">読んだ！</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="rating-section" id="rating-section" style="display: none;">
                         <h3>星評価</h3>
                         <div class="star-rating" id="star-rating">
                             <span class="star" data-rating="1">⭐</span>
@@ -182,7 +251,7 @@
                         <p id="rating-text" class="rating-text">評価を選択してください</p>
                     </div>
 
-                    <div class="review-section">
+                    <div class="review-section" id="review-section" style="display: none;">
                         <h3>書評</h3>
                         <textarea id="book-review" class="review-textarea" placeholder="この本についての感想や書評を入力してください..."></textarea>
                     </div>

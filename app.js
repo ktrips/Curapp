@@ -10,6 +10,7 @@ let answers = {
 // 保存した本のデータ管理
 let savedBooks = [];
 let currentEditingBookId = null;
+let affiliateTag = ''; // Amazonアフィリエイトタグ
 
 // DOM要素の取得
 const homeScreen = document.getElementById('home-screen');
@@ -19,6 +20,13 @@ const questionScreen = document.getElementById('question-screen');
 const resultScreen = document.getElementById('result-screen');
 const savedBooksScreen = document.getElementById('saved-books-screen');
 const bookDetailScreen = document.getElementById('book-detail-screen');
+const settingsScreen = document.getElementById('settings-screen');
+
+const headerMyBooksBtn = document.getElementById('header-my-books-btn');
+const headerSettingsBtn = document.getElementById('header-settings-btn');
+const settingsBackBtn = document.getElementById('settings-back-btn');
+const affiliateTagInput = document.getElementById('affiliate-tag');
+const saveSettingsBtn = document.getElementById('save-settings-btn');
 
 const mbtiInputBtn = document.getElementById('mbti-input-btn');
 const strengthInputBtn = document.getElementById('strength-input-btn');
@@ -66,12 +74,50 @@ function loadSavedBooks() {
     const saved = localStorage.getItem('savedBooks');
     if (saved) {
         savedBooks = JSON.parse(saved);
+        // 既存のデータにstatusがない場合はデフォルトで'want-to-read'を設定
+        savedBooks = savedBooks.map(book => {
+            if (!book.status) {
+                book.status = 'want-to-read';
+            }
+            return book;
+        });
+        saveSavedBooks(); // 更新したデータを保存
     }
 }
 
 // ローカルストレージに保存した本を保存
 function saveSavedBooks() {
     localStorage.setItem('savedBooks', JSON.stringify(savedBooks));
+}
+
+// アフィリエイトタグを読み込む
+function loadAffiliateTag() {
+    const saved = localStorage.getItem('affiliateTag');
+    if (saved) {
+        affiliateTag = saved;
+        if (affiliateTagInput) {
+            affiliateTagInput.value = affiliateTag;
+        }
+    }
+}
+
+// アフィリエイトタグを保存
+function saveAffiliateTag() {
+    localStorage.setItem('affiliateTag', affiliateTag);
+}
+
+// Amazonリンクにアフィリエイトタグを追加
+function addAffiliateTagToUrl(url) {
+    if (!affiliateTag || !url) return url;
+    
+    try {
+        const urlObj = new URL(url);
+        urlObj.searchParams.set('tag', affiliateTag);
+        return urlObj.toString();
+    } catch (e) {
+        // URLが無効な場合は元のURLを返す
+        return url;
+    }
 }
 
 // ホーム画面のボタンイベント
@@ -95,6 +141,28 @@ savedBooksBtn.addEventListener('click', () => {
     loadSavedBooks();
     showSavedBooksList();
     showScreen(savedBooksScreen);
+});
+
+headerMyBooksBtn.addEventListener('click', () => {
+    loadSavedBooks();
+    showSavedBooksList();
+    showScreen(savedBooksScreen);
+});
+
+headerSettingsBtn.addEventListener('click', () => {
+    loadAffiliateTag();
+    showScreen(settingsScreen);
+});
+
+settingsBackBtn.addEventListener('click', () => {
+    showScreen(homeScreen);
+});
+
+saveSettingsBtn.addEventListener('click', () => {
+    affiliateTag = affiliateTagInput.value.trim();
+    saveAffiliateTag();
+    alert('設定を保存しました！');
+    showScreen(homeScreen);
 });
 
 savedBooksBackBtn.addEventListener('click', () => {
@@ -234,7 +302,7 @@ function showResultWithType(mbtiType) {
             <div class="book-author">著者: ${book.author}</div>
             <div class="book-description">${book.description}</div>
             <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
-                <a href="${book.amazonUrl}" target="_blank" class="amazon-link">
+                <a href="${addAffiliateTagToUrl(book.amazonUrl)}" target="_blank" class="amazon-link">
                     📚 Amazonで見る
                 </a>
                 <button class="save-book-btn ${isSaved ? 'saved' : ''}" data-book-id="${bookId}" data-book-title="${book.title}" data-book-author="${book.author}" data-book-description="${book.description}" data-book-url="${book.amazonUrl}">
@@ -265,6 +333,7 @@ function showResultWithType(mbtiType) {
                     author: bookAuthor,
                     description: e.target.dataset.bookDescription,
                     amazonUrl: e.target.dataset.bookUrl,
+                    status: 'want-to-read', // デフォルトは「読みたい」
                     rating: 0,
                     review: '',
                     savedAt: new Date().toISOString()
@@ -288,6 +357,18 @@ function showSavedBooksList() {
     loadSavedBooks();
     savedBooksListElement.innerHTML = '';
     
+    // 各状態の本の数をカウント
+    const stats = {
+        'want-to-read': savedBooks.filter(b => b.status === 'want-to-read').length,
+        'reading': savedBooks.filter(b => b.status === 'reading').length,
+        'read': savedBooks.filter(b => b.status === 'read').length
+    };
+    
+    // 統計を表示
+    document.getElementById('stat-want-to-read').textContent = stats['want-to-read'];
+    document.getElementById('stat-reading').textContent = stats['reading'];
+    document.getElementById('stat-read').textContent = stats['read'];
+    
     if (savedBooks.length === 0) {
         savedBooksListElement.innerHTML = `
             <div class="empty-saved-books">
@@ -303,18 +384,30 @@ function showSavedBooksList() {
         const bookItem = document.createElement('div');
         bookItem.className = 'saved-book-item';
         
+        // 状態の表示
+        const statusLabels = {
+            'want-to-read': '📖 読みたい',
+            'reading': '📚 読んでる',
+            'read': '✅ 読んだ！'
+        };
+        const statusLabel = statusLabels[book.status] || statusLabels['want-to-read'];
+        
         const ratingStars = '⭐'.repeat(book.rating || 0);
         const reviewPreview = book.review ? (book.review.length > 100 ? book.review.substring(0, 100) + '...' : book.review) : '';
+        
+        const amazonLink = book.amazonUrl ? addAffiliateTagToUrl(book.amazonUrl) : '#';
         
         bookItem.innerHTML = `
             <div class="saved-book-item-header">
                 <div>
                     <div class="saved-book-title">${book.title}</div>
                     <div class="saved-book-author">著者: ${book.author}</div>
+                    <div class="saved-book-status">${statusLabel}</div>
                 </div>
                 <div class="saved-book-rating">${ratingStars || '未評価'}</div>
             </div>
-            <div class="saved-book-review-preview">${reviewPreview}</div>
+            ${book.status === 'read' && reviewPreview ? `<div class="saved-book-review-preview">${reviewPreview}</div>` : ''}
+            ${book.amazonUrl ? `<div style="margin-top: 10px;"><a href="${amazonLink}" target="_blank" class="amazon-link" style="display: inline-block;">📚 Amazonで見る</a></div>` : ''}
         `;
         
         bookItem.addEventListener('click', () => {
@@ -341,6 +434,20 @@ function showBookDetail(bookId) {
     detailBookDescription.textContent = book.description;
     bookReview.value = book.review || '';
     
+    // 状態の設定（デフォルトは「読みたい」）
+    const currentStatus = book.status || 'want-to-read';
+    updateStatusButtons(currentStatus);
+    
+    // 状態ボタンのクリックイベント
+    document.querySelectorAll('.status-btn').forEach(btn => {
+        btn.onclick = () => {
+            const newStatus = btn.dataset.status;
+            updateStatusButtons(newStatus);
+            // 状態に応じて評価・書評セクションの表示を切り替え
+            toggleRatingAndReview(newStatus);
+        };
+    });
+    
     // 星評価の表示
     updateStarRating(book.rating || 0);
     
@@ -352,7 +459,37 @@ function showBookDetail(bookId) {
         };
     });
     
+    // 初期状態に応じて評価・書評セクションの表示を設定
+    toggleRatingAndReview(currentStatus);
+    
     showScreen(bookDetailScreen);
+}
+
+// 状態ボタンの表示を更新
+function updateStatusButtons(status) {
+    document.querySelectorAll('.status-btn').forEach(btn => {
+        if (btn.dataset.status === status) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+}
+
+// 状態に応じて評価・書評セクションの表示を切り替え
+function toggleRatingAndReview(status) {
+    const ratingSection = document.getElementById('rating-section');
+    const reviewSection = document.getElementById('review-section');
+    
+    if (status === 'read') {
+        // 「読んだ！」状態の時のみ評価と書評を表示
+        ratingSection.style.display = 'block';
+        reviewSection.style.display = 'block';
+    } else {
+        // 「読みたい」「読んでる」状態の時は非表示
+        ratingSection.style.display = 'none';
+        reviewSection.style.display = 'none';
+    }
 }
 
 // 星評価を更新
@@ -382,11 +519,23 @@ saveReviewBtn.addEventListener('click', () => {
         return;
     }
     
-    const stars = starRating.querySelectorAll('.star.active');
-    const rating = stars.length;
+    // 現在選択されている状態を取得
+    const activeStatusBtn = document.querySelector('.status-btn.active');
+    const newStatus = activeStatusBtn ? activeStatusBtn.dataset.status : 'want-to-read';
     
-    savedBooks[bookIndex].rating = rating;
-    savedBooks[bookIndex].review = bookReview.value;
+    savedBooks[bookIndex].status = newStatus;
+    
+    // 「読んだ！」状態の時のみ評価と書評を保存
+    if (newStatus === 'read') {
+        const stars = starRating.querySelectorAll('.star.active');
+        const rating = stars.length;
+        savedBooks[bookIndex].rating = rating;
+        savedBooks[bookIndex].review = bookReview.value;
+    } else {
+        // 「読みたい」「読んでる」状態の時は評価と書評をクリア
+        savedBooks[bookIndex].rating = 0;
+        savedBooks[bookIndex].review = '';
+    }
     
     saveSavedBooks();
     showSavedBooksList();
@@ -439,5 +588,6 @@ homeBtn.addEventListener('click', () => {
     showScreen(homeScreen);
 });
 
-// アプリケーション起動時に保存した本を読み込む
+// アプリケーション起動時に保存した本とアフィリエイトタグを読み込む
 loadSavedBooks();
+loadAffiliateTag();
